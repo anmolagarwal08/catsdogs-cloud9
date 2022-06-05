@@ -1,25 +1,21 @@
+#provider
 provider "aws" {
-    profile = "default"
-    region = "us-east-1"
+  profile = "default"
+  region  = "us-east-1"
 }
 
 #data soruce for ami
 data "aws_ami" "ami-amzn2" {
-    most_recent = true
-    owners = ["amazon"]
-    
-    filter {
-        name = "name"
-        values = ["amzn2-ami-hvm-*-x86_64-gp2"]
-    }
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
 }
 
-#availiability zones in us east
-data "aws_availability_zones" "available" {
-  state = "available"
-}
 
-#default vpc id
 data "aws_vpc" "default" {
   default = true
 }
@@ -30,28 +26,20 @@ resource "aws_default_subnet" "default" {
     Name = "Default subnet"
   }
 }
-
-
-
-#EC2 instance in default vpc 
+#ec2 instance 
 resource "aws_instance" "linux_vm" {
   ami                    = data.aws_ami.ami-amzn2.id
-  key_name               = key_pair.web_key.key_name
+  key_name               = aws_key_pair.web_key.key_name
   instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.linux_sg.id]
+  vpc_security_group_ids = [aws_security_group.security_sg.id]
   user_data = "${file("docker_script.sh")}"
   tags = {
-    Name = "Ec2 amazon linux"
+    Name = "amazon linux server"
     }
 }
 
-#ssh key
-resource "key_pair" "web_key" {
-  key_name   = "anmol_key"
-  public_key = file("anmol_key.pub")
-}
-
-resource "aws_security_group" "linux_sg" {
+#security group
+resource "aws_security_group" "security_sg" {
   name        = "allow_http_conn"
   description = "Allow http inbound traffic"
   vpc_id      = data.aws_vpc.default.id
@@ -88,7 +76,12 @@ resource "aws_security_group" "linux_sg" {
   }
 }
 
-#ECR repository
+
+resource "aws_key_pair" "web_key" {
+  key_name   = "anmol_key"
+  public_key = file("anmol_key.pub")
+}
+
 resource "aws_ecr_repository" "lab1" {
   name                 = "lab1"
   image_tag_mutability = "MUTABLE"
