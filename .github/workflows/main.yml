@@ -1,4 +1,4 @@
-name: Deployment to ECR
+name: Deployment to ECR by git
 on:
   push:
     branches: [ master ]
