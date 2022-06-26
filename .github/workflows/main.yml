@@ -21,8 +21,8 @@ jobs:
       - name: Build, Test, Tag and push image ECR
         env: 
           ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
-          ECR_REPOSITORY: lab1
-          IMAGE_TAG: cats
+          ECR_REPOSITORY: catsimage-repo
+          IMAGE_TAG: catsimage
           
   
         run: |
@@ -37,7 +37,7 @@ jobs:
       - name: Build, Test, Tag and push to ECR
         env: 
           ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
-          ECR_REPOSITORY: lab1
+          ECR_REPOSITORY: dogssimage-repo
           IMAGE_TAG: dogs
           
       
