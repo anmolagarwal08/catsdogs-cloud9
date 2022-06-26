@@ -82,7 +82,12 @@ resource "aws_key_pair" "web_key" {
   public_key = file("anmol_key.pub")
 }
 
-resource "aws_ecr_repository" "lab1" {
-  name                 = "lab1"
+resource "aws_ecr_repository" "catsimage-repo" {
+  name                 = "catsimage-repo"
+  image_tag_mutability = "MUTABLE"
+}
+
+resource "aws_ecr_repository" "dogsimage-repo" {
+  name                 = "dogsimage-repo"
   image_tag_mutability = "MUTABLE"
 }
