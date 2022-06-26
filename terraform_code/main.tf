@@ -32,9 +32,13 @@ resource "aws_instance" "linux_vm" {
   key_name               = aws_key_pair.web_key.key_name
   instance_type          = "t3.medium"
   vpc_security_group_ids = [aws_security_group.security_sg.id]
-  user_data = "${file("docker_script.sh")}"
-  tags = {
-    Name = "amazon linux server"
+  iam_instance_profile   = "LabInstanceProfile"
+  user_data = file("docker_script.sh")
+  root_block_device {
+    volume_size = 16
+    }
+    tags = {
+      Name = "linux-ec2"
     }
 }
 
