@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  labels:
+    app: cats
+  name: replicaset-cats
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cats
+  template:
+    metadata:
+      labels:
+        app: cats
+    spec:
+      containers:
+      - image: 356258552752.dkr.ecr.us-east-1.amazonaws.com/catsimage-repo:v1
+        name: container-cats
+        ports:
+        - containerPort: 80
