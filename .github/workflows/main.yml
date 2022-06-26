@@ -26,7 +26,7 @@ jobs:
           
   
         run: |
-          cd cats/
+          cd cats/Docker/
           ls -ltra
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker run -d -p 8080:80 --name lab2-cats $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -42,7 +42,7 @@ jobs:
           
       
         run: |
-          cd dogs/
+          cd dogs/Docker/
           ls -ltra
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker run -d -p 8081:80 --name lab2-dogs $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
