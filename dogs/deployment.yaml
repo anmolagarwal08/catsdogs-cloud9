@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-dogs
+  labels:
+    app: dogs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dogs
+  template:
+    metadata:
+      labels:
+        app: dogs
+    spec:
+      containers:
+      - name: container-dogs
+        image: 356258552752.dkr.ecr.us-east-1.amazonaws.com/dogsimage-repo:v1
+        ports:
+        - containerPort: 80
