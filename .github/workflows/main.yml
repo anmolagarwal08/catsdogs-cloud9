@@ -22,14 +22,14 @@ jobs:
         env: 
           ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
           ECR_REPOSITORY: catsimage-repo
-          IMAGE_TAG: catsimage
+          IMAGE_TAG: v1
           
   
         run: |
           cd cats/
           ls -ltra
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker run -d -p 8080:80 --name lab1-cats $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker run -d -p 8080:80 --name lab2-cats $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker ps
           sleep 10
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -37,15 +37,15 @@ jobs:
       - name: Build, Test, Tag and push to ECR
         env: 
           ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
-          ECR_REPOSITORY: dogssimage-repo
-          IMAGE_TAG: dogs
+          ECR_REPOSITORY: dogsimage-repo
+          IMAGE_TAG: v1
           
       
         run: |
           cd dogs/
           ls -ltra
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker run -d -p 8081:80 --name lab1-dogs $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker run -d -p 8081:80 --name lab2-dogs $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker ps
           sleep 10
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  
