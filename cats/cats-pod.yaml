@@ -1,21 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: deployment
   labels:
     app: cats
+  name: cats-pod
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: cats
-  template:
-    metadata:
-      labels:
-        app: cats
-    spec:
-      containers:
-      - name: container -cats
-        image: 356258552752.dkr.ecr.us-east-1.amazonaws.com/catsimage-repo:v1
-        ports:
-        - containerPort: 80
+  containers:
+  - image: 356258552752.dkr.ecr.us-east-1.amazonaws.com/catsimage-repo:v1
+    name: cats-container
+    ports:
+    - containerPort: 80
