@@ -10,4 +10,4 @@ spec:
     name: container-pod
     ports:
     - containerPort: 80
-      hostPort: 8081
+      
